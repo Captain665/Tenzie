@@ -36,7 +36,7 @@ export default function RollGame() {
         } else {
             setTenzie(false)
             setDie(allNewDice())
-            setRole(() => 1)
+            setRole(() => 0)
         }
     }
 
