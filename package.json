@@ -12,7 +12,7 @@
     "react-confetti-explosion": "^2.1.2",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
-    "typescript": "^5.4.3",
+    "typescript": "^3.2.1 ",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
