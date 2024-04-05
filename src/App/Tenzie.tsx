@@ -5,28 +5,29 @@ import ConfettiExplosion from 'react-confetti-explosion';
 
 export default function RollGame() {
 
-    const [die, setDie] = React.useState(allNewDice())
-    const [tenzie, setTenzie] = React.useState(false)
-    const [winner, setWinner] = useState(false)
-    const [role, setRole] = React.useState(0)
+    const [die, setDie] = useState<{ value: number; isHeld: boolean; id: string }[]>(allNewDice())
+    const [tenzie, setTenzie] = useState<boolean>(false)
+    const [winner, setWinner] = useState<boolean>(false)
+    const [role, setRole] = useState<number>(0)
 
-    function generateNewDie() {
-        return {
+    function generateNewDie(): { value: number; isHeld: boolean; id: string } {
+        const diceValue = {
             value: Math.ceil(Math.random() * 8 + 1),
             isHeld: false,
             id: nanoid()
         }
+        return diceValue;
     }
 
-    function allNewDice() {
-        const dieArray = []
+    function allNewDice(): { value: number; isHeld: boolean; id: string }[] {
+        const dieArray: { value: number; isHeld: boolean; id: string }[] = [];
         for (let i = 0; i < 10; i++) {
             dieArray.push(generateNewDie())
         }
         return dieArray
     }
 
-    function rollDie() {
+    function rollDie(): void {
         if (!tenzie) {
             setDie(oldDie => oldDie.map(dies => {
                 return dies.isHeld ?
@@ -36,11 +37,11 @@ export default function RollGame() {
         } else {
             setTenzie(false)
             setDie(allNewDice())
-            setRole(() => 0)
+            setRole(0)
         }
     }
 
-    function holdDice(id) {
+    function holdDice(id: string) {
         if (!tenzie) {
             setDie(oldDie => oldDie.map(dies => {
                 return dies.id === id ?
@@ -53,15 +54,15 @@ export default function RollGame() {
     }
 
     React.useEffect(() => {
-        const allHeld = die.every(dies => dies.isHeld === true)
-        const firstDieValue = die[0].value;
-        const allValueSame = die.every(dies => dies.value === firstDieValue)
+        const allHeld: boolean = die.every(dies => dies.isHeld === true)
+        const firstDieValue: number = die[0].value;
+        const allValueSame: boolean = die.every(dies => dies.value === firstDieValue)
         if (allHeld && allValueSame) {
-            setTenzie(() => true)
-            setWinner(() => true)
+            setTenzie(true)
+            setWinner(true)
 
         } else {
-            setTenzie(() => false)
+            setTenzie(false)
         }
     }, [die])
 
@@ -99,7 +100,7 @@ export default function RollGame() {
                 </div>
 
                 {winner && <section className="absolute overflow-hidden border md:w-1/2 w-3/4 z-50s self-center bg-white flex justify-center align-top p-5 flex-col gap-2 rounded-xl m-auto">
-                    <ConfettiExplosion className="self-center" particleCount={300} duration={3000} force={1} particleSize={18}/>
+                    <ConfettiExplosion className="self-center" particleCount={300} duration={3000} force={1} particleSize={18} />
                     <button
                         className="text-4xl self-end w-fit -mt-6"
                         onClick={() => { setWinner(() => false) }}>
